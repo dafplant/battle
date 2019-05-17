@@ -1,8 +1,8 @@
 require 'sinatra/base'
-require 'capybara'
-require 'capybara/rspec'
-require 'rspec'
-require_relative '/Users/maxwellvanaken/Projects/battle/lib/player.rb'
+# require 'capybara'
+# require 'capybara/rspec'
+# require 'rspec'
+require '/Users/student/Projects/battle/lib/player.rb'
 
 class Battle < Sinatra::Base
   enable :sessions
@@ -20,12 +20,16 @@ class Battle < Sinatra::Base
   get '/play' do
     @player_1_name = $player_1.name
     @player_2_name = $player_2.name
+    @player_2_hp = $player_2.hit_points
     erb :play
   end
 
   get '/attack' do
     @player_1_name = $player_1.name
     @player_2_name = $player_2.name
+    #@player_1.attack(@player_2)
     erb :attack
   end
+
+  run! if app_file == $0
 end

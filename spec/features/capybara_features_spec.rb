@@ -11,7 +11,7 @@ feature 'Player Names' do
 
   scenario "click fight button" do
     sign_in_and_play
-    click_link 'Attack'
+    click_button 'Attack'
     expect(page).to have_content 'Bob attacked Dave'
   end
 
