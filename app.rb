@@ -3,6 +3,7 @@ require 'sinatra/base'
 # require 'capybara/rspec'
 # require 'rspec'
 require '/Users/student/Projects/battle/lib/player.rb'
+require '/Users/student/Projects/battle/lib/game.rb'
 
 class Battle < Sinatra::Base
   enable :sessions
@@ -12,22 +13,21 @@ class Battle < Sinatra::Base
   end
 
   post '/names' do
-    $player_1 = Player.new(params[:player_1_name])
-    $player_2 = Player.new(params[:player_2_name])
+    player_1 = Player.new(params[:player_1_name])
+    player_2 = Player.new(params[:player_2_name])
+    $game = Game.new(player_1, player_2)
     redirect '/play'
   end
 
   get '/play' do
-    @player_1_name = $player_1.name
-    @player_2_name = $player_2.name
-    @player_2_hp = $player_2.hit_points
+    @game = $game
+    @player_2_hp = @game.player_2.hit_points
     erb :play
   end
 
   get '/attack' do
-    @player_1_name = $player_1.name
-    @player_2_name = $player_2.name
-    @p2_hp = $player_1.attack($player_2)
+    @game = $game
+    @p2_hp = @game.attack(@game.player_2)
     erb :attack
   end
 
